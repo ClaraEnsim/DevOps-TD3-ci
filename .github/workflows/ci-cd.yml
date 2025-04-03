@@ -1,26 +1,26 @@
 name: CI/CD Pipeline node.js
 
-on:
+on: #déclenchement de l'intégration continue quand on fait un push sur la branche main ou quand on fait un pull_request sur la branche main 
  push:
    branches: [ "main" ]
  pull_request:
    branches: [ "main" ]
 
 jobs:
- build:
+ build: #dans chaque build, on va avoir les informations suivantes qui sont définies pour chaque version 
 
-   runs-on: ubuntu-latest
+   runs-on: ubuntu-latest #lancement d'un projet linux 
 
    strategy:
      matrix:
-       node-version: [18.x, 20.x, 22.x]
+       node-version: [18.x, 20.x, 22.x] #lancement sur 3 versions d'où 3 build différents qui contiennent chacun les informations ci-dessous 
    steps:
-     - uses: actions/checkout@v4
+     - uses: actions/checkout@v4 #récupération du fichier 
      - name: Use Node.js ${{ matrix.node-version }}
-       uses: actions/setup-node@v4
+       uses: actions/setup-node@v4 #setup du fichier 
        with:
          node-version: ${{ matrix.node-version }}
          cache: 'npm'
-     - run: npm ci
-     - run: npm run build --if-present
-     - run: npm test
+     - run: npm ci #initialisation du fichier npm
+     - run: npm run build --if-present #run du fichier 
+     - run: npm test #run du fichier test 
